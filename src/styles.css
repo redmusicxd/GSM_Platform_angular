@@ -1,1 +1,30 @@
+/* Add application styles & imports to this file! */
+@import "~angular-notifier/styles";
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* .cdk-overlay-pane {
+    max-width: none!important;
+    width: inherit!important;
+} */
+.mat-dialog-container{
+    background-color: rgb(38, 45, 51);
+    color: white;
+}
+.mat-select-value{
+    color: white;
+}
+mat-card {
+    background-color: #212d33!important;
+    color: white!important;
+}
+mat-label{
+    color: white!important;
+}
+.mat-menu-panel{
+    background-color: #212d33!important;
+}
+.mat-menu-item{
+    color: white!important;
+}

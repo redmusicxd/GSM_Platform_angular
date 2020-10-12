@@ -1,0 +1,61 @@
+<h1 mat-dialog-title>{{neworder ? "Add Order" : "Modify Order"}}</h1>
+<form [formGroup]="orderDialogForm" (ngSubmit)="neworder ? addOrder() :modifyOrder()">
+<mat-dialog-content *ngIf="orderinfo || neworder; else loading" style="display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+    align-content: space-around;flex-direction: row;">
+      <mat-form-field appearance="fill" appearance="outline">
+        <mat-label class="text-white">Numar Telefon</mat-label>
+        <input matInput type="tel"formControlName="phone_number" required>
+        <mat-icon matPrefix>phone</mat-icon>
+      </mat-form-field>    
+      <mat-form-field appearance="fill" appearance="outline">
+        <mat-label class="text-white">Produs</mat-label>
+        <input matInput formControlName="product" required>
+        <mat-icon matPrefix>category</mat-icon>
+      </mat-form-field>      
+      <mat-form-field appearance="fill" appearance="outline">
+        <mat-label class="text-white">IMEI</mat-label>
+        <input matInput formControlName="imei">
+        <mat-icon matPrefix>info</mat-icon>
+      </mat-form-field>      
+      <mat-form-field appearance="fill" appearance="outline">
+        <mat-label class="text-white">SN</mat-label>
+        <input matInput formControlName="serial_number" required>
+        <mat-icon matPrefix>info</mat-icon>
+      </mat-form-field>    
+      <mat-form-field appearance="fill" appearance="outline">
+          <mat-label class="text-white">Stare reparatie</mat-label>
+          <mat-select class="text-white" formControlName="order_status" required>
+            <mat-option value="in_lucru">In Lucru</mat-option>
+            <mat-option value="in_asteptare">In Asteptare</mat-option>
+            <mat-option value="diagnostic">Diagnoza</mat-option>
+            <mat-option value="gata">Gata</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>construction</mat-icon>
+        </mat-form-field>  
+        <mat-form-field appearance="fill" appearance="outline">
+          <mat-label class="text-white">Descriere Problema</mat-label>
+          <textarea matInput formControlName="issue_description" required></textarea>
+        </mat-form-field>      
+        <mat-form-field appearance="fill" appearance="outline">
+          <mat-label class="text-white">Observatii Tehnician</mat-label>
+          <textarea matInput formControlName="technician_observations"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill" appearance="outline">
+          <mat-label class="text-white">Amount</mat-label>
+          <input matInput type="number" formControlName="cost" required>
+          <span matSuffix>Lei</span>
+        </mat-form-field>
+      </mat-dialog-content>
+      <mat-dialog-actions style="    display: flex;
+justify-content: flex-end;">
+    <button mat-button type="submit" cdkFocusInitial>Ok</button>
+    <button mat-button [mat-dialog-close]>Cancel</button>
+  </mat-dialog-actions>
+</form>
+<ng-template #loading>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <!-- <mat-spinner></mat-spinner> -->
+</ng-template>
+

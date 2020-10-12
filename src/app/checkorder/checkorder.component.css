@@ -1,0 +1,36 @@
+/* @media (max-width:750px){
+    :host{
+        justify-content: unset!important;
+    }
+    mat-card {
+        margin-left: 2.8rem;
+    }
+}
+mat-card{
+    width: 15.8rem;
+}
+.orderinput {
+    flex-direction: column;
+}
+div.mat-form-field-wrapper{
+    margin-bottom: 0;
+}
+p{
+    overflow-wrap: break-word;
+    width: 14rem;
+} */
+@media (max-width: 768px){
+    mat-card{
+        margin-bottom: 1rem;
+    }
+}
+.mat-card-header{
+    flex-direction: column!important;
+}
+mat-card-content > p {
+    max-width: 13rem;
+    overflow-wrap: break-word;
+}
+mat-card-content > div > h4 {
+    margin: 0;
+}

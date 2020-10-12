@@ -1,0 +1,38 @@
+<mat-card>
+  <mat-card-header>
+      <mat-form-field appearance="fill" appearance="outline">
+        <mat-label>Numar comanda</mat-label>
+        <input matInput (keyup)="submit($event)" [(ngModel)]="noder" #orderno required>
+        <mat-icon matPrefix>list_alt</mat-icon>
+      </mat-form-field>
+      <button mat-raised-button (click)="searchOrder(noder)" [disabled]="orderno.value == '' ? true : false" style="margin-top: -1rem;"><mat-icon>search</mat-icon></button>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="data != undefined && data.phone_number != undefined">
+      <!-- <h4 class="font-weight-bold">Nume</h4>
+      <p>{{data.name}}</p> -->
+      <h4 class="font-weight-bold">Numar Telefon</h4>
+      <p>{{data.phone_number}}</p>
+      <h4 class="font-weight-bold">Produs</h4>
+      <p>{{data.product}}</p>      
+      <h4 class="font-weight-bold">IMEI</h4>
+      <p>{{data.imei}}</p>      
+      <h4 class="font-weight-bold">SN</h4>
+      <p>{{data.serial_number}}</p>
+      <h4 class="font-weight-bold">Status Reparatie</h4>
+      <mat-chip-list>
+        <mat-chip *ngIf="data.order_status == 'in_lucru'" style="width: max-content;">In Lucru</mat-chip>
+        <mat-chip *ngIf="data.order_status == 'in_asteptare'" class="bg-warning" style="width: max-content;">In Asteptare</mat-chip>
+        <mat-chip *ngIf="data.order_status == 'gata'" class="bg-success" style="width: max-content;">Gata</mat-chip>
+        <mat-chip *ngIf="data.order_status == 'diagnostic'" class="bg-info" style="width: max-content;">Diagnosticare</mat-chip>
+      </mat-chip-list>
+      <h4 class="font-weight-bold">Descriere Problema</h4>
+      <p>{{data.issue_description}}</p>
+      <h4 class="font-weight-bold">Observatii Tehnician</h4>
+      <p>{{data.technician_observations}}</p>
+      <h4 class="font-weight-bold">Cost</h4>
+      <p>{{data.cost}} RON</p>
+    </div>
+    <p *ngIf="notfound">Comanda nu exista!</p>
+  </mat-card-content>
+  </mat-card> 

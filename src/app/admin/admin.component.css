@@ -1,0 +1,24 @@
+/* :host{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+} */
+@media (max-width:768px){
+    mat-card{
+        /* width: min-content; */
+        margin-bottom: 1rem;
+    }
+}
+mat-card-content > p {
+    max-width: 13rem;
+    overflow-wrap: break-word;
+}
+#cardbuttons{
+    display: flex;
+    justify-content: center;
+}
+.md-fab-bottom-right{
+    position: fixed!important;
+    bottom: 10px!important;
+    right: 15px!important;
+}
