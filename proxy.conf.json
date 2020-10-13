@@ -1,13 +1,13 @@
 {
-    "/api/comandas": {
+    "/comandas": {
       "target": "http://localhost:1337",
       "secure": false
     },
-    "/api/users": {
+    "/users": {
         "target": "http://localhost:1337",
         "secure": false
     },
-    "/api/auth": {
+    "/auth": {
         "target": "http://localhost:1337",
         "secure": false
     },

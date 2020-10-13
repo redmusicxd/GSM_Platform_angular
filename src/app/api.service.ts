@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 
 export class ApiService {
 
-  base: string = environment.production ? "/api" : "/";
+  base: string = environment.production ? "/api" : "";
 
   constructor(private api: HttpClient) {} 
 
