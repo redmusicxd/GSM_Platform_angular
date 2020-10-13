@@ -1,5 +1,5 @@
 <mat-menu #menu="matMenu">
-  <a [routerLink]="administrator ? 'admin' : 'account'"><button mat-menu-item><mat-icon style="color: white;">admin_panel_settings</mat-icon>{{administrator ? "Admin Panel" : "Contul Meu"}}</button></a>
+  <a [routerLink]="administrator ? 'cards' : 'account'"><button mat-menu-item><mat-icon style="color: white;">admin_panel_settings</mat-icon>{{administrator ? "Admin Panel" : "Contul Meu"}}</button></a>
   <button mat-menu-item (click)="logout()"><mat-icon style="color: white;">power_settings_new</mat-icon>Logout</button>
 </mat-menu>
 <mat-toolbar class="topbar border-bottom border-danger d-flex justify-content-between">
