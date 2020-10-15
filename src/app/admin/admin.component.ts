@@ -43,6 +43,7 @@ export class AdminComponent implements OnInit {
 	}
   ngOnInit(): void {
     if(localStorage.getItem('jwt')){
+      this.socket = new Socket({ url: '/', options: {query: {token: localStorage.getItem('jwt')}}});
       this.authenticated = true;
         this.api.getOrders(localStorage.getItem('jwt')).subscribe((allorders : OrderInterface[]) => {this.orders$.next(allorders); this.orders = allorders;});
         // this.orders$.subscribe(a => console.log(a));

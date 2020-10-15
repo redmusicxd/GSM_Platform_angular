@@ -30,7 +30,7 @@ import { OrderdialogComponent } from './orderdialog/orderdialog.component';
 import { NotifierModule, NotifierOptions } from "angular-notifier";
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-const config: SocketIoConfig = { url: '/', options: {query: {token: localStorage.getItem('jwt')}} };
+const config: SocketIoConfig = { url: '/' };
 
 /**
  * Custom angular notifier options
