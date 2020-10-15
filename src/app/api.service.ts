@@ -10,7 +10,7 @@ export class ApiService {
 
   constructor(private api: HttpClient) { }
 
-  getOrder(order: string){
+  getOrder(order: number){
     return this.api.get(`/comandas/${order}`);
   }  
   getOrders(jwt: string){

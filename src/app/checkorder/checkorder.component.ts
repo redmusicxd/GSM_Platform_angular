@@ -9,7 +9,7 @@ import { Order, OrderInterface } from "../regorder/regorder.component"
 })
 export class CheckorderComponent implements OnInit {
 
-  noder: string;
+  noder: number;
   data: OrderInterface;
   notfound: boolean;
 
@@ -25,7 +25,7 @@ export class CheckorderComponent implements OnInit {
       this.data = new Order();
     }
   }
-  searchOrder(ordern: string) {
+  searchOrder(ordern: number) {
     this.notfound = false;
     this.data = null;
     this.api.getOrder(ordern).subscribe((order: OrderInterface) => this.data = order, (err : any) => err.status == 404 ? this.notfound = true : this.notfound = false

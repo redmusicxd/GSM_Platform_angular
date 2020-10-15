@@ -1,5 +1,5 @@
 <div *ngIf="authenticated" fxLayout="row wrap" class="justify-content-around">
-    <mat-card [id]="order.id" *ngFor="let order of orders$|async" class="m-2 align-self-start" style="max-width: 16rem;">
+    <mat-card [id]="order.id" *ngFor="let order of orders$|async" class="m-2 align-self-start">
         <mat-card-header>
             <h3 class="font-weight-bold mr-2 text-white">{{order.phone_number}}</h3>
             <mat-chip-list>
@@ -18,7 +18,7 @@
             <p><b>Observatii: </b> {{order.technician_observations}}</p>
             <p><b>Cost: </b> {{order.cost}}</p>
             <div id="cardbuttons">
-                <button mat-raised-button (click)="openDialog(order.id)" class="mr-3">Modify</button>
+                <button mat-raised-button (click)="openDialog(order)" class="mr-3">Modify</button>
                 <button mat-raised-button (click)="deleteOrder(order.id)" class="bg-danger text-white">Delete</button>
             </div>
         </mat-card-content>
