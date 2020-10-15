@@ -45,7 +45,7 @@ export class AdminComponent implements OnInit {
     if(localStorage.getItem('jwt')){
       this.authenticated = true;
         this.api.getOrders(localStorage.getItem('jwt')).subscribe((allorders : OrderInterface[]) => {this.orders$.next(allorders); this.orders = allorders;});
-        this.orders$.subscribe(a => console.log(a));
+        // this.orders$.subscribe(a => console.log(a));
         
         this.socket.on('order_updated',data => {
           this.showNotification("success", `[AdminC] Comanda ${data.id} a fost actualizata!`)
@@ -59,6 +59,8 @@ export class AdminComponent implements OnInit {
           this.showNotification("success", "[AdminC] Comanda nou aparuta!")
         })
         this.socket.on('order_deleted', (data: OrderInterface) => {
+          console.log(data);
+          
           this.orders.forEach((element, index, array) => {
             if(element.id === data.id){
               this.orders.splice(index, 1);
@@ -109,8 +111,10 @@ export class AdminComponent implements OnInit {
     this.editElement = null;
     })
   }
-  deleteOrder(order: string){
+  deleteOrder(order: number){
     this.api.deleteOrder(order,localStorage.getItem('jwt')).subscribe(del => {
+      console.log(del);
+      
       // if(del['id'] === order){
       //   this.showNotification("success", "[AdminC] Comanda a fost stearsa cu success!")
       // }

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import { NotifierService } from 'angular-notifier';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

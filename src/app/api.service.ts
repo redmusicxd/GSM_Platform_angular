@@ -17,11 +17,11 @@ export class ApiService {
     return this.api.get(`${this.base}/comandas/${order}`);
   }  
   getOrders(jwt: string){
-    return this.api.get(`${this.base}/comandas/`, {headers : {
+    return this.api.get(`${this.base}/comandas`, {headers : {
       Authorization: `Bearer ${jwt}`
     }});
   }    
-  deleteOrder(order:string, jwt: string){
+  deleteOrder(order:number, jwt: string){
     return this.api.delete(`${this.base}/comandas/${order}`, {headers : {
       Authorization: `Bearer ${jwt}`
     }});
@@ -41,7 +41,7 @@ export class ApiService {
     }})
   }
   registerOrder(jwt: string, order: OrderInterface){
-    return this.api.post(`${this.base}/comandas/`,order,{headers: {
+    return this.api.post(`${this.base}/comandas`,order,{headers: {
       Authorization: `Bearer ${jwt}`
     }})
   }
