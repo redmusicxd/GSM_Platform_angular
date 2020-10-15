@@ -14,7 +14,7 @@ export class ApiService {
   constructor(private api: HttpClient) {} 
 
   getOrder(order: number){
-    return this.api.get(`/comandas/${order}`);
+    return this.api.get(`${this.base}/comandas/${order}`);
   }  
   getOrders(jwt: string){
     return this.api.get(`${this.base}/comandas/`, {headers : {
