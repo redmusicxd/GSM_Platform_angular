@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
   unhide(ev: object){
     this.busy = false;
     // console.log(ev);
-    if(ev.constructor.name == "LoginComponent"){
+    if(ev['ok']){
       this.onLogin(ev['ok']);
     }
   }
