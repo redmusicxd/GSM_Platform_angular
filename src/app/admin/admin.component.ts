@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../api.service';
 import { OrderdialogComponent } from '../orderdialog/orderdialog.component'
 import { NotifierService } from 'angular-notifier';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
 import { Order, OrderInterface } from "../regorder/regorder.component"
 import { Router } from '@angular/router';
@@ -27,29 +27,7 @@ export class AdminComponent implements OnInit {
   orderRegister: OrderInterface = new Order();
   private notifier: NotifierService;
   orders: OrderInterface[];
-  orders$: Observable<OrderInterface[]> = new Observable<OrderInterface[]>(obs => {
-    this.api.getOrders(localStorage.getItem('jwt')).subscribe((allorders : OrderInterface[]) => {obs.next(allorders); this.orders = allorders;});
-    this.socket.on('order_updated',data => {
-      this.showNotification("success", `[AdminC] Comanda ${data.id} a fost actualizata!`)
-      obs.next(this.orders.map(arr => 
-        data['id'] === arr.id ? data : arr
-      ));
-    })    
-    this.socket.on('order_created',data => {
-      this.orders.push(data);
-      obs.next(this.orders);
-      this.showNotification("success", "[AdminC] Comanda nou aparuta!")
-    })
-    this.socket.on('order_deleted', (data: OrderInterface) => {
-      this.orders.forEach((element, index, array) => {
-        if(element.id === data.id){
-          this.orders.splice(index, 1);
-          obs.next(this.orders);
-          this.showNotification("success", `[AdminC] Comanda ${data.id} a fost stearsa!`)
-        }
-      });
-    })
-  });
+  orders$: Subject<OrderInterface[]> = new Subject<OrderInterface[]>();
 
   constructor(private api: ApiService, public dialog: MatDialog, notifier: NotifierService, private socket: Socket, private router: Router) { 
     this.notifier = notifier;
@@ -66,6 +44,29 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     if(localStorage.getItem('jwt')){
       this.authenticated = true;
+        this.api.getOrders(localStorage.getItem('jwt')).subscribe((allorders : OrderInterface[]) => {this.orders$.next(allorders); this.orders = allorders;});
+        this.orders$.subscribe(a => console.log(a));
+        
+        this.socket.on('order_updated',data => {
+          this.showNotification("success", `[AdminC] Comanda ${data.id} a fost actualizata!`)
+          this.orders$.next(this.orders.map(arr => 
+            data['id'] === arr.id ? data : arr
+          ));
+        })    
+        this.socket.on('order_created',data => {
+          this.orders.push(data);
+          this.orders$.next(this.orders);
+          this.showNotification("success", "[AdminC] Comanda nou aparuta!")
+        })
+        this.socket.on('order_deleted', (data: OrderInterface) => {
+          this.orders.forEach((element, index, array) => {
+            if(element.id === data.id){
+              this.orders.splice(index, 1);
+              this.orders$.next(this.orders);
+              this.showNotification("success", `[AdminC] Comanda ${data.id} a fost stearsa!`)
+            }
+          });
+        })
     }
     else{
       this.router.navigate(['/']);
@@ -79,11 +80,11 @@ export class AdminComponent implements OnInit {
 
   }
 
-  openDialog(orderid: number): void {
-    const dialogRef = this.dialog.open(OrderdialogComponent, {
+  openDialog(order: OrderInterface): void {
+    this.dialog.open(OrderdialogComponent, {
       width: 'max-content',
       height: 'auto',
-      data: {id: orderid}
+      data: order
     });
     
     // dialogRef.afterClosed().subscribe((result: OrderInterface) => {
@@ -96,10 +97,10 @@ export class AdminComponent implements OnInit {
     // });
   }  
   openAddDialog(): void {
-    const dialogRef = this.dialog.open(OrderdialogComponent, {
+    this.dialog.open(OrderdialogComponent, {
       width: 'max-content',
       height: 'auto',
-      data: { id: 0}
+      data: new Order
     });
   
   } 

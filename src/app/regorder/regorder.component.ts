@@ -56,7 +56,7 @@ export class RegorderComponent implements OnInit {
 
 }
 
-export class Order implements OrderInterface{
+export class Order implements OrderInterface {
   phone_number : number = null;
   issue_description: string = null;
   technician_observations : string = null;
