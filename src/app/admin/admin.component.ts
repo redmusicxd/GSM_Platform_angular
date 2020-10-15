@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../api.service';
 import { OrderdialogComponent } from '../orderdialog/orderdialog.component'
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit,OnDestroy {
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if(this.editElement != null){
@@ -46,7 +46,6 @@ export class AdminComponent implements OnInit {
       this.socket = new Socket({ url: '/', options: {query: {token: localStorage.getItem('jwt')}}});
       this.authenticated = true;
         this.api.getOrders(localStorage.getItem('jwt')).subscribe((allorders : OrderInterface[]) => {this.orders$.next(allorders); this.orders = allorders;});
-        // this.orders$.subscribe(a => console.log(a));
         
         this.socket.on('order_updated',data => {
           this.showNotification("success", `[AdminC] Comanda ${data.id} a fost actualizata!`)
@@ -74,13 +73,14 @@ export class AdminComponent implements OnInit {
     else{
       this.router.navigate(['/']);
     }
-    // setInterval(()=>{this.api.getOrders(localStorage.getItem('jwt')).subscribe((data: Order[]) => {
-    //   if(JSON.stringify(data) !== JSON.stringify(this.orders)){
-    //     this.orders = data;
-    //     this.orders$ = new Observable<Order[]>(sub => sub.next(data))
-    //   }
-    // })}, 5000)
 
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.socket.removeAllListeners();
+    this.socket.disconnect();
   }
 
   openDialog(order: OrderInterface): void {
