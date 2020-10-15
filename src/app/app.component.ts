@@ -1,8 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { AdminComponent } from './admin/admin.component';
-import { ApiService } from './api.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import { NotifierService } from 'angular-notifier';
 
 
 @Component({
@@ -16,43 +15,51 @@ export class AppComponent implements OnInit {
   busy: boolean = false;
   authenticated: boolean = false;
   user: string;
-  loginCard: boolean = false;
-  account: object;
   administrator: boolean = false;
+  private notifier: NotifierService;
 
-  constructor(private api: ApiService, private router: Router, public dialog: MatDialog) {}
+  constructor(private router: Router, public dialog: MatDialog, notifier : NotifierService) {
+    this.notifier = notifier;
+  }
+  public showNotification(type: string, message: string): void{
+    this.notifier.notify(type, message);
+  }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     if(localStorage.getItem('user') && localStorage.getItem('jwt')){
       this.authenticated = true;
       this.user = localStorage.getItem('user');
-      this.api.getUserInfo(localStorage.getItem('jwt')).subscribe(info => this.account = info).add(()=> {
-        if(this.account["role"]['name'] == "Admin"){
-          this.administrator = true;
-        }
-      })
+      if(localStorage.getItem("role") == "Admin"){
+        this.administrator = true;
+      }
     }
   }
 
   onLogin(ev: boolean){
     this.authenticated = ev;
     this.busy = false;
-    this.loginCard = false;
     this.user = localStorage.getItem('user');
-    if(localStorage.getItem('role') == "admin"){
+    if(localStorage.getItem('role') == "Admin"){
       this.administrator = true;
+      this.showNotification('info', 'Autentificat ca administrator')
     }
   }
 
-  hide(ev : AdminComponent){
+  hide(){
     this.busy = true;
+  }  
+  unhide(ev: object){
+    this.busy = false;
+    // console.log(ev);
+    if(ev.constructor.name == "LoginComponent"){
+      this.onLogin(ev['ok']);
+    }
   }
   logout(){
     localStorage.clear();
     this.authenticated = false;
     this.busy = false;
-    this.loginCard = false;
     this.administrator = false;
     this.router.navigate(['/']);
   }
