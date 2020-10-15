@@ -13,13 +13,8 @@ export class ApiService {
 
   constructor(private api: HttpClient) {} 
 
-<<<<<<< HEAD
   getOrder(order: number){
     return this.api.get(`/comandas/${order}`);
-=======
-  getOrder(order: string){
-    return this.api.get(`${this.base}/comandas/${order}`);
->>>>>>> ccde9dff79af61846732897e41d4d4834d171298
   }  
   getOrders(jwt: string){
     return this.api.get(`${this.base}/comandas/`, {headers : {
