@@ -1,20 +1,19 @@
 <mat-menu #menu="matMenu">
-  <a [routerLink]="administrator ? 'cards' : 'account'"><button mat-menu-item><mat-icon style="color: white;">admin_panel_settings</mat-icon>{{administrator ? "Admin Panel" : "Contul Meu"}}</button></a>
+  <a [routerLink]="'orders'"><button mat-menu-item><mat-icon style="color: white;">admin_panel_settings</mat-icon>{{administrator ? "Admin Panel" : "Contul Meu"}}</button></a>
   <button mat-menu-item (click)="logout()"><mat-icon style="color: white;">power_settings_new</mat-icon>Logout</button>
 </mat-menu>
 <mat-toolbar class="topbar border-bottom border-danger d-flex justify-content-between">
   <a routerLink="/" style="color: black;"><button mat-button (click)="busy=false" class="text-white"><mat-icon style="margin-right: 0.5rem;color: white;">construction</mat-icon>GSM Service</button></a>
   <button mat-stroked-button *ngIf="authenticated" [matMenuTriggerFor]="menu" class="text-white">Salut, {{user}}</button>
-  <button mat-button *ngIf="!authenticated" (click)="busy=true;loginCard=true" class="text-white">Login</button>
+  <a routerLink="/login" *ngIf="!authenticated" style="color: black;"><button mat-button  class="text-white">Login</button></a>
 </mat-toolbar>
 <div class="bg-image"></div>
 
 <div class="container mw-100" role="main">
   <div fxLayout="row wrap" class="justify-content-around home mobil" [ngClass]="(!administrator ? 'align-self-center' : '')">
     <app-checkorder fxFlex="min-content" *ngIf="!busy" class="d-flex align-self-center mt-2 mb-2"></app-checkorder>
-    <app-regorder fxFlex="min-content" #regorder *ngIf="authenticated && administrator && !busy" class="mb-2 mt-2"></app-regorder>
-    <app-login *ngIf="busy && loginCard" (success)="onLogin($event)" class="mt-2"></app-login>
+    <app-regorder fxFlex="min-content" *ngIf="authenticated && administrator && !busy" class="mb-2 mt-2"></app-regorder>
   </div>
-  <router-outlet (activate)="hide($event)"></router-outlet>
+  <router-outlet (activate)="hide()" (deactivate)="unhide($event)"></router-outlet>
 </div>
 <notifier-container></notifier-container>

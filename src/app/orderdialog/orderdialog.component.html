@@ -1,12 +1,12 @@
 <h1 mat-dialog-title>{{neworder ? "Add Order" : "Modify Order"}}</h1>
 <form [formGroup]="orderDialogForm" (ngSubmit)="neworder ? addOrder() :modifyOrder()">
-<mat-dialog-content *ngIf="orderinfo || neworder; else loading" style="display: flex;
+<mat-dialog-content style="display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
-    align-content: space-around;flex-direction: row;">
+    align-content: space-around;flex-direction: row;" *ngIf="dialogdata">
       <mat-form-field appearance="fill" appearance="outline">
         <mat-label class="text-white">Numar Telefon</mat-label>
-        <input matInput type="tel"formControlName="phone_number" required>
+        <input matInput type="tel" formControlName="phone_number" required>
         <mat-icon matPrefix>phone</mat-icon>
       </mat-form-field>    
       <mat-form-field appearance="fill" appearance="outline">
@@ -54,8 +54,4 @@ justify-content: flex-end;">
     <button mat-button [mat-dialog-close]>Cancel</button>
   </mat-dialog-actions>
 </form>
-<ng-template #loading>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    <!-- <mat-spinner></mat-spinner> -->
-</ng-template>
 

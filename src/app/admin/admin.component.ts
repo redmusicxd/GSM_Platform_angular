@@ -1,11 +1,12 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../api.service';
-import {OrderdialogComponent} from '../orderdialog/orderdialog.component'
+import { OrderdialogComponent } from '../orderdialog/orderdialog.component'
 import { NotifierService } from 'angular-notifier';
 import { Observable, of } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
 import { Order, OrderInterface } from "../regorder/regorder.component"
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -50,7 +51,7 @@ export class AdminComponent implements OnInit {
     })
   });
 
-  constructor(private api: ApiService, public dialog: MatDialog, notifier: NotifierService, private socket: Socket) { 
+  constructor(private api: ApiService, public dialog: MatDialog, notifier: NotifierService, private socket: Socket, private router: Router) { 
     this.notifier = notifier;
   }
   /**
@@ -66,7 +67,9 @@ export class AdminComponent implements OnInit {
     if(localStorage.getItem('jwt')){
       this.authenticated = true;
     }
-
+    else{
+      this.router.navigate(['/']);
+    }
     // setInterval(()=>{this.api.getOrders(localStorage.getItem('jwt')).subscribe((data: Order[]) => {
     //   if(JSON.stringify(data) !== JSON.stringify(this.orders)){
     //     this.orders = data;

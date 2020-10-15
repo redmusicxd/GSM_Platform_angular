@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ApiService } from '../api.service';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { NotifierService } from 'angular-notifier';
 import { Order, OrderInterface } from "../regorder/regorder.component"
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-orderdialog',
@@ -11,13 +11,11 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./orderdialog.component.css']
 })
 export class OrderdialogComponent implements OnInit {
-
-  orderinfo: OrderInterface;
-  orderDialogForm = this.fb.group(new Order(), Validators.required);
+  orderDialogForm: FormGroup = this.fb.group(this.dialogdata, Validators.required);
   private notifier: NotifierService;
   neworder: boolean = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogdata: any, private api: ApiService,public dialogRef: MatDialogRef<OrderdialogComponent>, notifier: NotifierService, private fb: FormBuilder) { 
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogdata: OrderInterface, private api: ApiService,public dialogRef: MatDialogRef<OrderdialogComponent>, notifier: NotifierService, private fb: FormBuilder) { 
     this.notifier = notifier;
   }
   
@@ -32,15 +30,15 @@ export class OrderdialogComponent implements OnInit {
   }
   
   closeDialog() {
-    this.dialogRef.close(this.orderinfo);
+    this.dialogRef.close(this.orderDialogForm.value);
   }
 
   ngOnInit(): void {
-    if(this.dialogdata.id != 0){
-      this.api.getOrder(this.dialogdata.id).subscribe((order: OrderInterface) => this.orderinfo = order)
+    if(this.dialogdata.id){
+      // this.api.getOrder(this.dialogdata.id).subscribe((order: OrderInterface) => this.orderinfo = order)
+      this.neworder = false;
     }
     else{
-      this.orderinfo = new Order();
       this.neworder = true;
     }
   }
