@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { OrderInterface } from "./regorder/regorder.component"
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,37 +9,44 @@ import { OrderInterface } from "./regorder/regorder.component"
 
 export class ApiService {
 
-  constructor(private api: HttpClient) { }
+  base: string = environment.production ? "/api" : "";
 
+  constructor(private api: HttpClient) {} 
+
+<<<<<<< HEAD
   getOrder(order: number){
     return this.api.get(`/comandas/${order}`);
+=======
+  getOrder(order: string){
+    return this.api.get(`${this.base}/comandas/${order}`);
+>>>>>>> ccde9dff79af61846732897e41d4d4834d171298
   }  
   getOrders(jwt: string){
-    return this.api.get(`/comandas/`, {headers : {
+    return this.api.get(`${this.base}/comandas/`, {headers : {
       Authorization: `Bearer ${jwt}`
     }});
   }    
   deleteOrder(order:string, jwt: string){
-    return this.api.delete(`/comandas/${order}`, {headers : {
+    return this.api.delete(`${this.base}/comandas/${order}`, {headers : {
       Authorization: `Bearer ${jwt}`
     }});
   }  
   modifyOrder(orderid: number, order: OrderInterface, jwt: string){
-    return this.api.put(`/comandas/${orderid}`, order, {headers : {
+    return this.api.put(`${this.base}/comandas/${orderid}`, order, {headers : {
       Authorization: `Bearer ${jwt}`
     }});
   }
   login(username: string, password: string){
-    return this.api.post(`/auth/local`,{identifier: username, password:password})
+    return this.api.post(`${this.base}/auth/local`,{identifier: username, password:password})
   }
 
   getUserInfo(jwt: string){
-    return this.api.get(`/users/me`, {headers : {
+    return this.api.get(`${this.base}/users/me`, {headers : {
       Authorization: `Bearer ${jwt}`
     }})
   }
   registerOrder(jwt: string, order: OrderInterface){
-    return this.api.post(`/comandas/`,order,{headers: {
+    return this.api.post(`${this.base}/comandas/`,order,{headers: {
       Authorization: `Bearer ${jwt}`
     }})
   }
