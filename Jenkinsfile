@@ -6,14 +6,11 @@ pipeline {
       steps {
         nodejs('Angular') {
           sh 'npm install'
-          sh 'ng build'
+          sh 'ng build --prod'
         }
 
       }
     }
 
-  }
-  environment {
-    test = 'test'
   }
 }
