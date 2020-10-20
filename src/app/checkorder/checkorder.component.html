@@ -8,7 +8,7 @@
       <button mat-raised-button (click)="searchOrder(noder)" [disabled]="orderno.value == '' ? true : false" style="margin-top: -1rem;"><mat-icon>search</mat-icon></button>
   </mat-card-header>
   <mat-card-content>
-    <div *ngIf="data != undefined && data.phone_number != undefined">
+    <div *ngIf="data != undefined && data.phone_number != undefined && !editmode" (click)="editField()">
       <!-- <h4 class="font-weight-bold">Nume</h4>
       <p>{{data.name}}</p> -->
       <h4 class="font-weight-bold">Numar Telefon</h4>
@@ -33,6 +33,26 @@
       <h4 class="font-weight-bold">Cost</h4>
       <p>{{data.cost}} RON</p>
     </div>
+    <form [formGroup]="editfieldform" *ngIf="editmode && admin" (ngSubmit)="updateOrder(noder)">
+      <p><b>Telefon: </b><input formControlName="phone_number" required></p>
+      <p><b>Produs: </b><input formControlName="product" required></p>
+      <p><b>IMEI: </b><input formControlName="imei" required></p>
+      <p><b>SN: </b><input formControlName="serial_number" required></p>
+      <p><b>Status: </b>
+          <select formControlName="order_status" required>
+              <option value="gata">Gata</option>
+              <option value="in_lucru">In Lucru</option>
+              <option value="in_asteptare">In Asteptare</option>
+              <option value="diagnostic">Diagnoza</option>
+          </select></p>
+      <p><b>Problema: </b> <textarea formControlName="issue_description" required></textarea></p>
+      <p><b>Observatii: </b> <textarea formControlName="technician_observations" required></textarea></p>
+      <p><b>Cost: </b> <input formControlName="cost" required></p>
+      <div id="cardbuttons">
+          <button mat-raised-button type="submit" class="mr-3">Modify</button>
+          <button mat-raised-button type="button" (click)="editmode=false" class="bg-danger text-white">Cancel</button>
+      </div>
+  </form>
     <p *ngIf="notfound">Comanda nu exista!</p>
   </mat-card-content>
   </mat-card> 

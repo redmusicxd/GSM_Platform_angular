@@ -36,3 +36,10 @@
         -webkit-box-align: center;
     }
 }
+
+@media (max-width: 530px){
+    .container{
+        padding-left: 0!important;
+        padding-right: 0!important;
+    }
+}
