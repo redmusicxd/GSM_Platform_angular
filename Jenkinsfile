@@ -13,4 +13,7 @@ pipeline {
     }
 
   }
+  environment {
+    test = 'test'
+  }
 }
