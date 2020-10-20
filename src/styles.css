@@ -28,3 +28,7 @@ mat-label{
 .mat-menu-item{
     color: white!important;
 }
+.mat-card-header-text {
+    /* CSS styles go here */
+    margin: 0px!important; 
+}

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ApiService } from '../api.service';
 import { NotifierService } from 'angular-notifier';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 export interface OrderInterface {
   id?: number,
@@ -20,12 +21,13 @@ export interface OrderInterface {
   templateUrl: './regorder.component.html',
   styleUrls: ['./regorder.component.css']
 })
-export class RegorderComponent implements OnInit {
+export class RegorderComponent implements OnInit,OnDestroy {
   RegOrderForm = this.fb.group(new Order(), Validators.required);
   authenticated: boolean = false;
   @Output() admin = new EventEmitter<boolean>(); 
   private notifier: NotifierService;
   orderRegister: OrderInterface = new Order();
+  private ordersub: Subscription;
   constructor(private api: ApiService, notifier: NotifierService, private fb: FormBuilder) {
     this.notifier = notifier;
   }
@@ -45,9 +47,16 @@ export class RegorderComponent implements OnInit {
       this.authenticated = true;
     }
   }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.ordersub){
+      this.ordersub.unsubscribe();
+    }
+  }
 
   registerOrder(){
-    this.api.registerOrder(localStorage.getItem('jwt'),this.RegOrderForm.value).subscribe((res: OrderInterface) => {
+    this.ordersub = this.api.registerOrder(localStorage.getItem('jwt'),this.RegOrderForm.value).subscribe((res: OrderInterface) => {
       this.showNotification('success', `[RegOrder] Comanda ${res.id} s-a inregistrat cu success!`)
     }, err => {
       this.showNotification("error", "[RegOrder] Ceva nu a mers bine!")

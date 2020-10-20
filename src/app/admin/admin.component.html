@@ -1,16 +1,15 @@
 <div *ngIf="authenticated" fxLayout="row wrap" class="justify-content-around">
-    <mat-card [id]="order.id" *ngFor="let order of orders$|async" class="m-2 align-self-start">
-        <mat-card-header>
+    <mat-card [id]="order.id" *ngFor="let order of orders$|async" class="m-2 align-self-start" style="max-width: 15rem;">
+        <mat-card-header [id]="order.id" *ngIf="editElement != order.id" (click)="editField($event.target.parentElement.id)">
             <h3 class="font-weight-bold mr-2 text-white">{{order.phone_number}}</h3>
             <mat-chip-list>
                 <mat-chip *ngIf="order.order_status == 'in_lucru'" style="width: max-content;">In Lucru</mat-chip>
                 <mat-chip *ngIf="order.order_status == 'in_asteptare'" class="bg-warning" style="width: max-content;">In Asteptare</mat-chip>
                 <mat-chip *ngIf="order.order_status == 'gata'" class="bg-success" style="width: max-content;">Gata</mat-chip>
                 <mat-chip *ngIf="order.order_status == 'diagnostic'" class="bg-info" style="width: max-content;">Diagnoza</mat-chip>
-              </mat-chip-list>
+            </mat-chip-list>
         </mat-card-header>
         <mat-card-content [id]="order.id" class="text-white" *ngIf="editElement != order.id" (click)="editField($event.target.parentElement.id)">
-            
             <p><b>Produs: </b>{{order.product}}</p>
             <p><b>IMEI: </b> {{order.imei}}</p>
             <p><b>SN: </b> {{order.serial_number}}</p>
@@ -22,18 +21,27 @@
                 <button mat-raised-button (click)="deleteOrder(order.id)" class="bg-danger text-white">Delete</button>
             </div>
         </mat-card-content>
-        <mat-card-content class="text-white" *ngIf="editElement == order.id && orderRegister">
-            
-            <p><b>Produs: </b><input [(ngModel)]="orderRegister.product"></p>
-            <p><b>IMEI: </b><input [(ngModel)]="orderRegister.imei"></p>
-            <p><b>SN: </b><input [(ngModel)]="orderRegister.serial_number"></p>
-            <p><b>Problema: </b> <input [(ngModel)]="orderRegister.issue_description"></p>
-            <p><b>Observatii: </b> <input [(ngModel)]="orderRegister.technician_observations"></p>
-            <p><b>Cost: </b> <input [(ngModel)]="orderRegister.cost"></p>
-            <div id="cardbuttons">
-                <button mat-raised-button (click)="updateOrder(order.id)" class="mr-3">Modify</button>
-                <button mat-raised-button (click)="editElement=''" class="bg-danger text-white">Cancel</button>
-            </div>
+        <mat-card-content  class="text-white"  *ngIf="editElement == order.id">
+            <form [formGroup]="editfieldform" (ngSubmit)="updateOrder(order.id)">
+                <p><b>Telefon: </b><input formControlName="phone_number" required></p>
+                <p><b>Produs: </b><input formControlName="product" required></p>
+                <p><b>IMEI: </b><input formControlName="imei" required></p>
+                <p><b>SN: </b><input formControlName="serial_number" required></p>
+                <p><b>Status: </b>
+                    <select formControlName="order_status" required>
+                        <option value="gata">Gata</option>
+                        <option value="in_lucru">In Lucru</option>
+                        <option value="in_asteptare">In Asteptare</option>
+                        <option value="diagnostic">Diagnoza</option>
+                    </select></p>
+                <p><b>Problema: </b> <textarea formControlName="issue_description" required></textarea></p>
+                <p><b>Observatii: </b> <textarea formControlName="technician_observations" required></textarea></p>
+                <p><b>Cost: </b> <input formControlName="cost" required></p>
+                <div id="cardbuttons">
+                    <button mat-raised-button type="submit" class="mr-3">Modify</button>
+                    <button mat-raised-button type="button" (click)="editElement=''" class="bg-danger text-white">Cancel</button>
+                </div>
+            </form>
         </mat-card-content>
     </mat-card>
 </div>

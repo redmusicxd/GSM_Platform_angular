@@ -9,6 +9,29 @@
         margin-bottom: 1rem;
     }
 }
+@media (max-width: 530px){
+    mat-card{
+        width: 11rem;
+        margin-left: 0!important;
+        margin-right: 0!important;
+        margin-top: .5rem!important;
+        margin-bottom: .5rem!important;
+    }
+    p{
+        font-size: small;
+    }
+    mat-card-header > h3{
+        font-size: smaller;
+        overflow-wrap: anywhere;
+    }
+    mat-chip{
+        width: fit-content!important;
+        font-size: smaller!important;
+    }
+    #cardbuttons > button {
+        margin-right: 0rem!important;
+    }
+}
 mat-card-content > p {
     max-width: 13rem;
     overflow-wrap: break-word;
@@ -21,4 +44,10 @@ mat-card-content > p {
     position: fixed!important;
     bottom: 10px!important;
     right: 15px!important;
+}
+form > p > input {
+    max-width: 8rem;
+}
+mat-card-header > input {
+    max-width: 8rem;
 }

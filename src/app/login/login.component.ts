@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
-import { NotifierService } from 'angular-notifier';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,OnDestroy {
   username: string;
   password: string;
   hide: boolean = true;
@@ -18,11 +18,12 @@ export class LoginComponent implements OnInit {
     username: [''],
     password: ['']
   }, Validators.required);
+  private loginsub: Subscription;
 
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) { }
 
   login(){
-    this.api.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(res => {
+    this.loginsub = this.api.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(res => {
       // console.log(res);
       localStorage.setItem("jwt",res['jwt']);
       localStorage.setItem("user",res['user']['username']);
@@ -33,6 +34,16 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(localStorage.getItem('user') && localStorage.getItem('jwt')){
+      this.router.navigate(['/']);
+    }
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.loginsub){
+      this.loginsub.unsubscribe();
+    }
   }
 
 }
