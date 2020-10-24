@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 
 export class ApiService {
 
-  base: string = environment.production ? "/api" : "";
+  base: string = environment.production ? `${environment.STRAPI_URL}/api` : `${environment.STRAPI_URL}`;
 
   constructor(private api: HttpClient) {} 
 
@@ -17,10 +17,15 @@ export class ApiService {
     return this.api.get(`${this.base}/comandas/${order}`);
   }  
   getOrders(jwt: string){
-    return this.api.get(`${this.base}/comandas`, {headers : {
+    return this.api.get(`${this.base}/comandas?_sort=id:DESC`, {headers : {
       Authorization: `Bearer ${jwt}`
     }});
-  }    
+  }
+  searchRelatedOrders(phone: number, id: number, jwt: string){
+    return this.api.get(`${this.base}/comandas?_sort=id:DESC&phone_number=${phone}&id_ne=${id}`, {headers : {
+      Authorization: `Bearer ${jwt}`
+    }});
+  }
   deleteOrder(order:number, jwt: string){
     return this.api.delete(`${this.base}/comandas/${order}`, {headers : {
       Authorization: `Bearer ${jwt}`

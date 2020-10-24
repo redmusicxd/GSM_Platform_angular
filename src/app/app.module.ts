@@ -19,6 +19,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { MatSelectModule } from "@angular/material/select"
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
@@ -29,6 +30,7 @@ import { RegorderComponent } from './regorder/regorder.component';
 import { OrderdialogComponent } from './orderdialog/orderdialog.component';
 import { NotifierModule, NotifierOptions } from "angular-notifier";
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { OrderInfoDialogComponent } from './order-info-dialog/order-info-dialog.component'
 
 const config: SocketIoConfig = { url: '/' };
 
@@ -84,7 +86,8 @@ const customNotifierOptions: NotifierOptions = {
     CheckorderComponent,
     AdminComponent,
     RegorderComponent,
-    OrderdialogComponent
+    OrderdialogComponent,
+    OrderInfoDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +113,8 @@ const customNotifierOptions: NotifierOptions = {
     MatProgressBarModule,
     MatSelectModule,
     NotifierModule.withConfig(customNotifierOptions),
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    MatExpansionModule
   ],
   exports: [
     MatDialogClose,

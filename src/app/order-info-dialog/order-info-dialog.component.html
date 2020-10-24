@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Related Orders</h1>
+<mat-dialog-content>
+    <mat-accordion *ngIf="relateds.length != 0; else nothing">
+        <mat-expansion-panel hideToggle *ngFor="let order of relateds">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 style="margin-bottom: 0px; margin-top: -3px;">{{order.phone_number}}</h3>
+            </mat-panel-title>
+            <mat-panel-description>
+              <p>{{order.product}}</p>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p><b>Issue Description: </b>{{order.issue_description}}</p>
+          <p><b>Observatii Tehnician: </b>{{order.technician_observations}}</p>
+          <p><b>IMEI: </b>{{order.imei}}</p>
+          <p><b>Serial Number: </b>{{order.serial_number}}</p>
+          <p><b>Cost: </b>{{order.cost}}</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <ng-template #nothing>
+          <h3>No order related.</h3>
+      </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions style="display: flex;justify-content: flex-end;">
+    <button mat-button [mat-dialog-close] cdkFocusInitial>Ok</button>
+  </mat-dialog-actions>
