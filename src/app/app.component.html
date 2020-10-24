@@ -1,18 +1,18 @@
-<div class="bg-image"></div>
-<mat-menu #menu="matMenu">
-  <a [routerLink]="'orders'"><button mat-menu-item><mat-icon style="color: white;">admin_panel_settings</mat-icon>{{administrator ? "Admin Panel" : "Contul Meu"}}</button></a>
-  <button mat-menu-item (click)="logout()"><mat-icon style="color: white;">power_settings_new</mat-icon>Logout</button>
-</mat-menu>
+<div class="blurfilter container-fluid"></div>
 <mat-toolbar class="topbar border-bottom border-danger d-flex justify-content-between">
   <a routerLink="/" style="color: black;"><button mat-button (click)="busy=false" class="text-white"><mat-icon style="margin-right: 0.5rem;color: white;">construction</mat-icon>GSM Service</button></a>
   <button mat-stroked-button *ngIf="authenticated" [matMenuTriggerFor]="menu" class="text-white">Salut, {{user}}</button>
   <a routerLink="/login" *ngIf="!authenticated" style="color: black;"><button mat-button  class="text-white">Login</button></a>
 </mat-toolbar>
+<mat-menu #menu="matMenu">
+  <a [routerLink]="'orders'"><button mat-menu-item><mat-icon style="color: white;">admin_panel_settings</mat-icon>{{administrator ? "Admin Panel" : "Contul Meu"}}</button></a>
+  <button mat-menu-item (click)="logout()"><mat-icon style="color: white;">power_settings_new</mat-icon>Logout</button>
+</mat-menu>
 
 <div class="container mw-100" role="main">
   <div fxLayout="row wrap" class="justify-content-around home mobil" *ngIf="!busy" [ngClass]="(!administrator ? 'align-self-center' : '')">
     <app-checkorder fxFlex="min-content" class="d-flex align-self-center mt-2 mb-2"></app-checkorder>
-    <app-regorder fxFlex="min-content" *ngIf="authenticated && administrator" class="mb-2 mt-2"></app-regorder>
+    <app-regorder  *ngIf="authenticated && administrator" class="mb-2 mt-2"></app-regorder>
   </div>
   <router-outlet (activate)="hide()" (deactivate)="unhide($event)"></router-outlet>
 </div>
