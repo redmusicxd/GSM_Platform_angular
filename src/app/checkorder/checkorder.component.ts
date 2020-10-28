@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
 import { ApiService } from '../api.service';
 import { Order, OrderInterface } from "../regorder/regorder.component"
@@ -17,7 +17,13 @@ export class CheckorderComponent implements OnInit {
   editmode: boolean = false;
   editfieldform: FormGroup;
   admin: boolean = false;
+  ordernumber = this.fb.control('',Validators.required)
   private notifier: NotifierService;
+  @HostListener('document:mouseup', ['$event']) onMouseUpHandler(event: MouseEvent) {
+		if(event.target['className'] === "blurfilter container-fluid"){
+			this.editmode = null;
+		}
+  }
   constructor(private api: ApiService, private fb: FormBuilder, notifier: NotifierService) {
     this.notifier = notifier;
   }
@@ -27,25 +33,31 @@ export class CheckorderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('jwt') && localStorage.getItem('role') === "Admin"){
-      this.admin = true;
-    }
   }
-  submit(f: KeyboardEvent){
-    if(f.key == "Enter"){
-      this.searchOrder(this.noder);
-    }
-    if(f.key == "Escape"){
-      this.data = new Order();
-    }
+  clear(f?: KeyboardEvent){
+    // if(f.key == "Escape"){
+    //   this.data = null;
+    // }
+    this.ordernumber.setValue('');
+    this.data = null;
   }
   editField(){
-    this.editmode = true;
+    if(this.checkAdminRights()){
+      this.editmode = true;
+    }
   }
-  searchOrder(ordern: number) {
+  checkAdminRights(): boolean {
+    if(localStorage.getItem('jwt') && localStorage.getItem('role') === "Admin"){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  searchOrder() {
     this.notfound = false;
     this.data = null;
-    this.api.getOrder(ordern).subscribe((order: OrderInterface) => {this.data = order; this.editfieldform = this.fb.group(this.data)}, (err : any) => err.status == 404 ? this.notfound = true : this.notfound = false
+    this.api.getOrder(this.ordernumber.value).subscribe((order: OrderInterface) => {this.data = order; this.editfieldform = this.fb.group(this.data)}, (err : any) => err.status == 404 ? this.notfound = true : this.notfound = false
     );
   }
   updateOrder(orderid: any){
@@ -53,6 +65,6 @@ export class CheckorderComponent implements OnInit {
     this.editmode = false;
     this.data = this.editfieldform.value;
     this.showNotifs("success",`[CheckOrder] Comanda ${res.id} a fost modificata cu success`)
-    }, err => this.showNotifs("error",`[CheckOrder] Comanda ${this.noder} nu a putut fi modificata`))
+    }, err => this.showNotifs("error",`[CheckOrder] Comanda ${this.data.id} nu a putut fi modificata`))
   }
 }
