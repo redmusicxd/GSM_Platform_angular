@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  STRAPI_URL: ""
+  API_URL: ""
 };
 
 /*
