@@ -30,4 +30,4 @@ jobs:
     - name: Building
       run: npm run build
       env: 
-        API_URL: \'https://gsm.kodeative.gq\' 
+        API_URL: 'https://gsm.kodeative.gq' 
