@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../api.service';
 import { OrderdialogComponent } from '../orderdialog/orderdialog.component'
+import { OrderInfoDialogComponent } from '../order-info-dialog/order-info-dialog.component'
 import { NotifierService } from 'angular-notifier';
 import { Subject, Subscription } from 'rxjs';
 import { Socket } from 'ngx-socket-io';
@@ -54,7 +55,7 @@ export class AdminComponent implements OnInit,OnDestroy {
     if(localStorage.getItem('jwt')){
       this.socket = new Socket({ url: '/', options: {query: {token: localStorage.getItem('jwt')}}});
       this.authenticated = true;
-        this.getorders = this.api.getOrders(localStorage.getItem('jwt')).subscribe((allorders : OrderInterface[]) => {this.orders$.next(allorders.sort((a,b) => 0 - (a.id > b.id ? 1 : -1))); this.orders = allorders;});
+        this.getorders = this.api.getOrders(localStorage.getItem('jwt')).subscribe((allorders : OrderInterface[]) => {this.orders$.next(allorders.filter((val)=>{return val.order_status != "gata"})); this.orders = allorders;});
         // this.orders$.subscribe({
 				// 	next: v => console.log(v)
 				// })
@@ -117,7 +118,16 @@ export class AdminComponent implements OnInit,OnDestroy {
       data: new Order
     });
   
-  } 
+  }   
+  openInfoDialog(phone: number, id: number): void {
+    this.dialog.open(OrderInfoDialogComponent, {
+      width: 'max-content',
+      height: 'auto',
+      data: this.api.searchRelatedOrders(phone,id,localStorage.getItem('jwt'))
+    });
+  
+  }
+
   updateOrder(orderid: any){
     this.api.modifyOrder(orderid,this.editfieldform.value,localStorage.getItem('jwt')).subscribe(res => {
     this.editElement = null;

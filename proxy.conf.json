@@ -13,6 +13,8 @@
     },
     "/socket.io": {
         "target": "http://localhost:1337",
-        "secure": false
+        "secure": false,
+        "ws":true
     }
+    
 }
