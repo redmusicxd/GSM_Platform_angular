@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
 import { ApiService } from '../api.service';
@@ -18,6 +18,13 @@ export class CheckorderComponent implements OnInit {
   editfieldform: FormGroup;
   admin: boolean = false;
   private notifier: NotifierService;
+
+  @HostListener('document:mouseup', ['$event']) onMouseUpHandler(event: MouseEvent) {
+		if(event.target['className'] === "bg-image"){
+			this.editmode = null;
+		}
+  }
+
   constructor(private api: ApiService, private fb: FormBuilder, notifier: NotifierService) {
     this.notifier = notifier;
   }
