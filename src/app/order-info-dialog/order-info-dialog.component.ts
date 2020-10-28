@@ -1,8 +1,7 @@
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Observable } from '@apollo/client/core';
-import { ApolloQueryResult } from 'apollo-client/core/types';
+import { Observable } from 'rxjs';
 import { OrderInterface } from '../regorder/regorder.component';
 
 @Component({
