@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run config -- --environment=dev && ng serve --configuration=dev --host=0.0.0.0 --proxy-config=proxy.conf.json",
-    "build": "npm run config -- --environment=prod && ng build --configuration=production",
+    "start": "npm run config -- --environment=dev && npx ng serve --configuration=dev --host=0.0.0.0 --proxy-config=proxy.conf.json",
+    "build": "npm run config -- --environment=prod && npx ng build --configuration=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
