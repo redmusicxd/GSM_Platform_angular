@@ -39,6 +39,7 @@ mat-card-content > p {
 #cardbuttons{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .md-fab-bottom-right{
     position: fixed!important;
@@ -50,4 +51,10 @@ form > p > input {
 }
 mat-card-header > input {
     max-width: 8rem;
+}
+mat-card-actions {
+    padding-top: 0px!important;
+}
+mat-card-content {
+    margin-bottom: 0px!important;
 }

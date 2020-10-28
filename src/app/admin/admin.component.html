@@ -1,7 +1,7 @@
 <div *ngIf="authenticated" fxLayout="row wrap" class="justify-content-around">
     <mat-card [id]="order.id" *ngFor="let order of orders$|async" class="m-2 align-self-start" style="max-width: 15rem;">
-        <mat-card-header [id]="order.id" *ngIf="editElement != order.id" (click)="editField($event.target.parentElement.id)" style="display: flex;flex-wrap: wrap;">
-            <h3 class="font-weight-bold mr-2 text-white mb-0">{{order.phone_number}}</h3>
+        <mat-card-header [id]="order.id" *ngIf="editElement != order.id" (click)="editField($event.target.parentElement.parentElement.id)" style="display: flex;overflow-wrap: anywhere;justify-content: space-between;">
+            <mat-card-title class="font-weight-bold mr-2 text-white mb-0">{{order.phone_number}}</mat-card-title>
             <mat-chip-list>
                 <mat-chip *ngIf="order.order_status == 'in_lucru'" style="width: max-content;">In Lucru</mat-chip>
                 <mat-chip *ngIf="order.order_status == 'in_asteptare'" class="bg-warning" style="width: max-content;">In Asteptare</mat-chip>
@@ -16,12 +16,12 @@
             <p><b>Problema: </b> {{order.issue_description}}</p>
             <p><b>Observatii: </b> {{order.technician_observations}}</p>
             <p><b>Cost: </b> {{order.cost}}</p>
-            <div id="cardbuttons">
-                <button mat-raised-button (click)="openDialog(order)" class="mr-3">Modify</button>
-                <button mat-raised-button (click)="deleteOrder(order.id)" class="bg-danger text-white mr-2">Delete</button>
-                <button type="button" class="btn btn-sm btn-dark pt-2" (click)="openInfoDialog(order.phone_number, order.id)"><mat-icon>info</mat-icon></button>
-            </div>
         </mat-card-content>
+        <mat-card-actions id="cardbuttons">
+            <button mat-raised-button (click)="openDialog(order)">Modify</button>
+            <button mat-raised-button (click)="deleteOrder(order.id)" class="bg-danger text-white">Delete</button>
+            <button type="button" class="btn btn-sm btn-dark pt-2" (click)="openInfoDialog(order.phone_number, order.id)"><mat-icon>info</mat-icon></button>
+        </mat-card-actions>
         <mat-card-content  class="text-white"  *ngIf="editElement == order.id">
             <form [formGroup]="editfieldform" (ngSubmit)="updateOrder(order.id)">
                 <p><b>Telefon: </b><input formControlName="phone_number" required></p>
@@ -40,7 +40,7 @@
                 <p><b>Cost: </b> <input formControlName="cost" required></p>
                 <div id="cardbuttons">
                     <button mat-raised-button type="submit" class="mr-3">Modify</button>
-                    <button mat-raised-button type="button" (click)="editElement=''" class="bg-danger text-white">Cancel</button>
+                    <button mat-raised-button type="button" (click)="editElement=''" class="bg-danger text-white mr-2">Cancel</button>
                     <button type="button" class="btn btn-sm btn-dark pt-2" (click)="openInfoDialog(order.phone_number, order.id)"><mat-icon>info</mat-icon></button>
                 </div>
             </form>

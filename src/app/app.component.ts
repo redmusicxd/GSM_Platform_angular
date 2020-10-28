@@ -35,8 +35,8 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onLogin(ev: boolean){
-    this.authenticated = ev;
+  onLogin(){
+    this.authenticated = true;
     this.busy = false;
     this.user = localStorage.getItem('user');
     if(localStorage.getItem('role') == "Admin"){
@@ -50,9 +50,9 @@ export class AppComponent implements OnInit {
   }  
   unhide(ev: object){
     this.busy = false;
-    // console.log(ev);
-    if(ev['ok']){
-      this.onLogin(ev['ok']);
+    console.log(ev);
+    if(localStorage.getItem('jwt')){
+      this.onLogin();
     }
   }
   logout(){
