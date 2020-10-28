@@ -5,8 +5,8 @@ pipeline {
       agent any
       steps {
         nodejs('Angular') {
-          sh 'npm install'
-          sh 'ng build --prod'
+          sh 'npm ci'
+          sh 'npm run build'
         }
 
       }
