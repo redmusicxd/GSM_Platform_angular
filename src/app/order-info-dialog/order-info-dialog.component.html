@@ -11,6 +11,7 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <p><b>Issue Description: </b>{{order.issue_description}}</p>
+          <p><b>Stare:</b>{{order.order_status}}</p>
           <p><b>Observatii Tehnician: </b>{{order.technician_observations}}</p>
           <p><b>IMEI: </b>{{order.imei}}</p>
           <p><b>Serial Number: </b>{{order.serial_number}}</p>
@@ -23,4 +24,4 @@
 </mat-dialog-content>
 <mat-dialog-actions style="display: flex;justify-content: flex-end;">
     <button mat-button [mat-dialog-close] cdkFocusInitial>Ok</button>
-  </mat-dialog-actions>
+</mat-dialog-actions>

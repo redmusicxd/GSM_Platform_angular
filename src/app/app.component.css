@@ -37,6 +37,7 @@
 div[role="main"]{
     display: grid;
     justify-content: stretch;
+    align-content: baseline;
 }
 @media (max-width: 768px){
     .home{

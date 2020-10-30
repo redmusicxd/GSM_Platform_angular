@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit,OnDestroy {
   }
 
   @HostListener('document:mouseup', ['$event']) onMouseUpHandler(event: MouseEvent) {
-		if(event.target['className'] === "bg-image"){
+		if(event.target['className'] === "blurfilter container-fluid"){
 			this.editElement = null;
 		}
   }
@@ -55,7 +55,7 @@ export class AdminComponent implements OnInit,OnDestroy {
     if(localStorage.getItem('jwt')){
       this.socket = new Socket({ url: '/', options: {query: {token: localStorage.getItem('jwt')}}});
       this.authenticated = true;
-        this.getorders = this.api.getOrders(localStorage.getItem('jwt')).subscribe((allorders : OrderInterface[]) => {this.orders$.next(allorders.filter((val)=>{return val.order_status != "gata"})); this.orders = allorders;});
+        this.getorders = this.api.getOrders(localStorage.getItem('jwt')).subscribe((allorders : OrderInterface[]) => {this.orders$.next(allorders.filter((val)=>{return val.order_status != "gata"})); this.orders = allorders.filter((val)=>{return val.order_status != "gata"})});
         // this.orders$.subscribe({
 				// 	next: v => console.log(v)
 				// })

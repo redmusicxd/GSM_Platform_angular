@@ -1,24 +1,33 @@
-<mat-card>
-  <mat-card-header>
+<mat-card class="mb-2">
+  <mat-card-content class="mt-2">
+    <form (ngSubmit)="searchOrder()">
       <mat-form-field appearance="fill" appearance="outline">
         <mat-label>Numar comanda</mat-label>
-        <input matInput (keyup)="submit($event)" [(ngModel)]="noder" #orderno required>
+        <input matInput [formControl]="ordernumber">
         <mat-icon matPrefix>list_alt</mat-icon>
+        <button mat-icon-button matSuffix type="button" (click)="clear()" [attr.aria-label]="'Clear'"><mat-icon>clear</mat-icon></button>
       </mat-form-field>
-      <button mat-raised-button (click)="searchOrder(noder)" [disabled]="orderno.value == '' ? true : false" style="margin-top: -1rem;"><mat-icon>search</mat-icon></button>
-  </mat-card-header>
-  <mat-card-content>
+      <button mat-raised-button type="submit" [disabled]="ordernumber.value == '' ? true : false" style="margin-top: -1rem;width: 100%;"><mat-icon>search</mat-icon></button>
+    </form>
+    <p *ngIf="notfound">Comanda nu exista!</p>
+  </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="data != (null || undefined)">
     <div *ngIf="data != undefined && data.phone_number != undefined && !editmode" (click)="editField()">
       <!-- <h4 class="font-weight-bold">Nume</h4>
       <p>{{data.name}}</p> -->
       <h4 class="font-weight-bold">Numar Telefon</h4>
       <p>{{data.phone_number}}</p>
+      <mat-divider></mat-divider>
       <h4 class="font-weight-bold">Produs</h4>
-      <p>{{data.product}}</p>      
+      <p>{{data.product}}</p>
+      <mat-divider></mat-divider>
       <h4 class="font-weight-bold">IMEI</h4>
       <p>{{data.imei}}</p>      
+      <mat-divider></mat-divider>
       <h4 class="font-weight-bold">SN</h4>
       <p>{{data.serial_number}}</p>
+      <mat-divider></mat-divider>
       <h4 class="font-weight-bold">Status Reparatie</h4>
       <mat-chip-list>
         <mat-chip *ngIf="data.order_status == 'in_lucru'" style="width: max-content;">In Lucru</mat-chip>
@@ -26,14 +35,17 @@
         <mat-chip *ngIf="data.order_status == 'gata'" class="bg-success" style="width: max-content;">Gata</mat-chip>
         <mat-chip *ngIf="data.order_status == 'diagnostic'" class="bg-info" style="width: max-content;">Diagnosticare</mat-chip>
       </mat-chip-list>
+      <mat-divider></mat-divider>
       <h4 class="font-weight-bold">Descriere Problema</h4>
       <p>{{data.issue_description}}</p>
+      <mat-divider></mat-divider>
       <h4 class="font-weight-bold">Observatii Tehnician</h4>
       <p>{{data.technician_observations}}</p>
+      <mat-divider></mat-divider>
       <h4 class="font-weight-bold">Cost</h4>
       <p>{{data.cost}} RON</p>
     </div>
-    <form [formGroup]="editfieldform" *ngIf="editmode && admin" (ngSubmit)="updateOrder(noder)">
+    <form [formGroup]="editfieldform" *ngIf="editmode" (ngSubmit)="updateOrder(noder)">
       <p><b>Telefon: </b><input formControlName="phone_number" required></p>
       <p><b>Produs: </b><input formControlName="product" required></p>
       <p><b>IMEI: </b><input formControlName="imei" required></p>
@@ -53,6 +65,4 @@
           <button mat-raised-button type="button" (click)="editmode=false" class="bg-danger text-white">Cancel</button>
       </div>
   </form>
-    <p *ngIf="notfound">Comanda nu exista!</p>
-  </mat-card-content>
-  </mat-card> 
+  </mat-card>

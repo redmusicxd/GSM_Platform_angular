@@ -31,6 +31,9 @@ mat-card-content > p {
     max-width: 13rem;
     overflow-wrap: break-word;
 }
-mat-card-content > div > h4 {
+mat-card > div > h4 {
     margin: 0;
+}
+:host{
+    flex-direction: column;
 }

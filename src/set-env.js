@@ -11,10 +11,7 @@ require('dotenv').config();
 var environment = yargs_1.argv.environment;
 var isProd = environment === 'prod';
 var targetPath = "./src/environments/environment." + environment + ".ts";
-var envConfigFile = `export const environment = {
-    production: ${isProd},  
-    API_URL: ${isProd ? process.env.API_URL : '\'\''},
-};`;
+var envConfigFile = "\nexport const environment = {\n  production: " + isProd + ",\n  API_URL: \"" + process.env.API_URL + "\",\n};\n";
 fs_1.writeFile(targetPath, envConfigFile, function (err) {
     if (err) {
         console.log(err);
