@@ -5,3 +5,6 @@ jobs:
   include:
     - stage: Build
       script: npm run build
+after_success:
+- echo "${SFTP_KEY}" | base64 --decode > /tmp/sftp_rsa
+- rsync -Pav -e "ssh -i /tmp/sftp_rsa" $TRAVIS_BUILD_DIR/dist/GSM-Platform  ${SFTP_USER}@${SFTP_HOST}:/var/www/html/
