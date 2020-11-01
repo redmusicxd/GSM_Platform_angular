@@ -3,7 +3,5 @@ node_js:
   - 14
 jobs:
   include:
-    - stage: Dependencies
-      script: npm ci
     - stage: Build
       script: npm run build
