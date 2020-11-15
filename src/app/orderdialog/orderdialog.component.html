@@ -31,6 +31,7 @@ justify-content: space-around;
             <mat-option value="in_asteptare">In Asteptare</mat-option>
             <mat-option value="diagnostic">Diagnoza</mat-option>
             <mat-option value="gata">Gata</mat-option>
+            <mat-option value="predat">Predata</mat-option>
           </mat-select>
           <mat-icon matPrefix>construction</mat-icon>
         </mat-form-field>  
@@ -43,8 +44,13 @@ justify-content: space-around;
           <textarea matInput formControlName="technician_observations"></textarea>
         </mat-form-field>
         <mat-form-field appearance="fill" appearance="outline">
-          <mat-label class="text-white">Amount</mat-label>
+          <mat-label class="text-white">Cost</mat-label>
           <input matInput type="number" formControlName="cost" required>
+          <span matSuffix>Lei</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" appearance="outline">
+          <mat-label class="text-white">Paid</mat-label>
+          <input matInput type="number" formControlName="paid" required>
           <span matSuffix>Lei</span>
         </mat-form-field>
       </mat-dialog-content>

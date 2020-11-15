@@ -4,30 +4,6 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-/* .cdk-overlay-pane {
-    max-width: none!important;
-    width: inherit!important;
-} */
-.mat-dialog-container{
-    background-color: rgb(38, 45, 51);
-    color: white;
-}
-.mat-select-value{
-    color: white;
-}
-mat-card {
-    background-color: #212d33!important;
-    color: white!important;
-}
-mat-label{
-    color: white!important;
-}
-.mat-menu-panel{
-    background-color: #212d33!important;
-}
-.mat-menu-item{
-    color: white!important;
-}
 .mat-card-header-text {
     /* CSS styles go here */
     margin: 0px!important; 
@@ -36,9 +12,13 @@ mat-label{
     box-shadow: 4px 4px 4px 1px rgba(0, 0, 0, 0.2), 1px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)!important;
 }
 p{
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
 }
+
 mat-card{
     border-bottom-right-radius: 1rem!important;
     border-top-left-radius: 1rem!important;
+}
+label{
+    margin-bottom: 0!important;
 }

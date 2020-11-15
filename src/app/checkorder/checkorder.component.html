@@ -1,4 +1,4 @@
-<mat-card class="mb-2">
+<mat-card [color]="'primary'">
   <mat-card-content class="mt-2">
     <form (ngSubmit)="searchOrder()">
       <mat-form-field appearance="fill" appearance="outline">
@@ -7,12 +7,12 @@
         <mat-icon matPrefix>list_alt</mat-icon>
         <button mat-icon-button matSuffix type="button" (click)="clear()" [attr.aria-label]="'Clear'"><mat-icon>clear</mat-icon></button>
       </mat-form-field>
-      <button mat-raised-button type="submit" [disabled]="ordernumber.value == '' ? true : false" style="margin-top: -1rem;width: 100%;"><mat-icon>search</mat-icon></button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="ordernumber.value == '' ? true : false" style="margin-top: -1rem;width: 100%;"><mat-icon>search</mat-icon></button>
     </form>
     <p *ngIf="notfound">Comanda nu exista!</p>
   </mat-card-content>
   </mat-card>
-  <mat-card *ngIf="data != (null || undefined)">
+  <mat-card *ngIf="false">
     <div *ngIf="data != undefined && data.phone_number != undefined && !editmode" (click)="editField()">
       <!-- <h4 class="font-weight-bold">Nume</h4>
       <p>{{data.name}}</p> -->
@@ -23,7 +23,7 @@
       <p>{{data.product}}</p>
       <mat-divider></mat-divider>
       <h4 class="font-weight-bold">IMEI</h4>
-      <p>{{data.imei}}</p>      
+      <p>{{data.imei}}</p>
       <mat-divider></mat-divider>
       <h4 class="font-weight-bold">SN</h4>
       <p>{{data.serial_number}}</p>

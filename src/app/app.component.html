@@ -1,19 +1,35 @@
-<div class="blurfilter container-fluid"></div>
-<mat-toolbar class="topbar border-bottom border-danger d-flex justify-content-between">
-  <a routerLink="/" style="color: black;"><button mat-button (click)="busy=false" class="text-white"><mat-icon style="margin-right: 0.5rem;color: white;">construction</mat-icon>GSM Service</button></a>
-  <button mat-stroked-button *ngIf="authenticated" [matMenuTriggerFor]="menu" class="text-white">Salut, {{user}}</button>
-  <a routerLink="/login" *ngIf="!authenticated" style="color: black;"><button mat-button  class="text-white">Login</button></a>
+<!-- <div class="blurfilter container-fluid"></div> -->
+<mat-toolbar class="border-bottom border-danger topbar pr-0" [color]="'accent'">
+  <button mat-icon-button [(disabled)]="!user" (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <a routerLink="/"><button mat-button color="primary">GSM Service</button></a>
+  <!-- <span>GSM Service</span> -->
+  <span class="spacer"></span>
+  <button mat-button color="primary" *ngIf="authenticated && user" [matMenuTriggerFor]="menu">Salut, {{user}}<mat-icon>expand_more</mat-icon></button>
+  <a routerLink="/login" *ngIf="!authenticated" style="color: black;"><button mat-icon-button><mat-icon>login</mat-icon></button></a>
 </mat-toolbar>
 <mat-menu #menu="matMenu">
-  <a [routerLink]="'orders'"><button mat-menu-item><mat-icon style="color: white;">admin_panel_settings</mat-icon>{{administrator ? "Admin Panel" : "Contul Meu"}}</button></a>
-  <button mat-menu-item (click)="logout()"><mat-icon style="color: white;">power_settings_new</mat-icon>Logout</button>
+  <a [routerLink]="'/panel'"><button mat-menu-item><mat-icon>dashboard</mat-icon>Dashboard</button></a>
+  <button mat-menu-item (click)="logout()"><mat-icon>power_settings_new</mat-icon>Logout</button>
 </mat-menu>
-
-<div class="container mw-100" role="main">
-  <div fxLayout="row wrap" class="justify-content-around home mobil" *ngIf="!busy" [ngClass]="(!administrator ? 'align-self-center' : '')">
-    <app-checkorder fxFlex="min-content" class="d-flex align-self-center mt-2 mb-2"></app-checkorder>
-    <app-regorder  *ngIf="authenticated && administrator" class="mb-2 mt-2"></app-regorder>
-  </div>
-  <router-outlet (activate)="hide()" (deactivate)="unhide($event)"></router-outlet>
-</div>
-<notifier-container></notifier-container>
+<mat-drawer-container class="h-100">
+  <mat-drawer mode="over" #drawer>
+    <mat-nav-list>
+      <h3 matSubheader>
+        {{user}}
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="logout()"><mat-icon>power_settings_new</mat-icon></button></h3>
+      <a *ngIf="administrator" [routerLink]="'/panel'" mat-list-item ><button mat-icon-button><mat-icon>dashboard</mat-icon>Dashboard</button></a>
+      <a *ngIf="administrator" [routerLink]="'panel/orders'" mat-list-item><button mat-icon-button><mat-icon>list_alt</mat-icon>Orders</button></a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content class="mw-100">
+      <div fxLayout="row wrap" class="justify-content-around home mobil align-content-center" *ngIf="!busy" [ngClass]="(!administrator ? 'align-self-center' : '')">
+        <app-checkorder fxFlex="min-content" class="d-flex align-self-center" [color]="'primary'"></app-checkorder>
+        <app-regorder  *ngIf="authenticated && administrator"></app-regorder>
+      </div>
+      <router-outlet (activate)="routeOn($event)" (deactivate)="routeOff($event)" class="position-absolute"></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
+<notifier-container class="position-absolute"></notifier-container>

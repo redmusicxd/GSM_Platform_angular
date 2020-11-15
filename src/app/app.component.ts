@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import { NotifierService } from 'angular-notifier';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -9,54 +10,61 @@ import { NotifierService } from 'angular-notifier';
   styleUrls: ['./app.component.css']
 })
 
-
 export class AppComponent implements OnInit {
-  busy: boolean = false;
-  authenticated: boolean = false;
+  busy: boolean;
+  authenticated: boolean;
   user: string;
-  administrator: boolean = false;
+  administrator: boolean;
+  sideopen: boolean;
+  i: number;
   private notifier: NotifierService;
 
-  constructor(private router: Router, public dialog: MatDialog, notifier : NotifierService) {
+  constructor(private router: Router, public dialog: MatDialog, notifier: NotifierService, private route: ActivatedRoute) {
     this.notifier = notifier;
   }
   public showNotification(type: string, message: string): void{
     this.notifier.notify(type, message);
   }
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    if(localStorage.getItem('user') && localStorage.getItem('jwt')){
+    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    // Add 'implements OnInit' to the class.
+    if (localStorage.getItem('user') && localStorage.getItem('jwt')){
       this.authenticated = true;
       this.user = localStorage.getItem('user');
-      if(localStorage.getItem("role") == "Admin"){
+      if (localStorage.getItem('role') === 'Admin'){
         this.administrator = true;
       }
     }
   }
 
-  onLogin(){
-    this.authenticated = true;
+  onLogin(): void{
+    if (localStorage.getItem('jwt') && localStorage.getItem('user')){
+      this.authenticated = true;
+      this.user = localStorage.getItem('user');
+    }
     this.busy = false;
-    this.user = localStorage.getItem('user');
-    if(localStorage.getItem('role') == "Admin"){
+    if (localStorage.getItem('role') === 'Admin'){
       this.administrator = true;
-      this.showNotification('info', 'Autentificat ca administrator')
+      this.showNotification('info', 'Autentificat ca administrator');
     }
   }
 
-  hide(){
+  routeOn(ev: any): void{
+    // console.log(ev);
+
     this.busy = true;
-  }  
-  unhide(ev: object){
+  }
+  routeOff(ev: any): void{
+    // console.log(ev);
+
     this.busy = false;
-    console.log(ev);
-    if(localStorage.getItem('jwt')){
+    if (ev.route.component.name === 'LoginComponent'){
       this.onLogin();
     }
   }
-  logout(){
+  logout(): void{
     localStorage.clear();
+    this.user = null;
     this.authenticated = false;
     this.busy = false;
     this.administrator = false;

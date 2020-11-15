@@ -1,0 +1,72 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$GSM-Platform-primary: mat-palette($mat-blue-grey);
+$GSM-Platform-background: mat-palette($mat-grey);
+$GSM-Platform-accent: mat-palette($mat-brown, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$GSM-Platform-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$GSM-Platform-theme: mat-light-theme((
+  color: (
+    primary: $GSM-Platform-primary,
+    accent: $GSM-Platform-accent,
+    warn: $GSM-Platform-warn,
+  )
+));
+mat-card {
+
+  background-color: mat-color($GSM-Platform-accent)!important;
+  
+}
+mat-icon {
+  color: mat-color($GSM-Platform-primary)!important;
+}
+mat-drawer {
+  background-color: mat-color($GSM-Platform-accent, lighter)!important;
+}
+.mat-menu-panel {
+  background-color: mat-color($GSM-Platform-accent)!important;
+}
+mat-drawer-container{
+  background-color: mat-color($GSM-Platform-accent, darker)!important;;
+}
+app-root{
+  background-color: mat-color($GSM-Platform-accent, darker)!important;;
+}
+mat-dialog-container {
+  background-color: mat-color($GSM-Platform-background)!important;
+}
+mat-card-title{
+  color: mat-color($GSM-Platform-background, 800)!important;
+}
+mat-card-content{
+  color: mat-color($GSM-Platform-background, 800)!important;
+}
+mat-card-header{
+  color: mat-color($GSM-Platform-background, 800)!important;
+}
+mat-expansion-panel{
+  background-color: mat-color($GSM-Platform-accent)!important;
+}
+.toolbar-orders{
+  background-color: mat-color($GSM-Platform-background)!important;
+}
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($GSM-Platform-theme);
