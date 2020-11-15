@@ -75,7 +75,5 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.yesterdaysale += order.paid;
       });
     });
-    console.log(this.todaysale);
-
   }
 }

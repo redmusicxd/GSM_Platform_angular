@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import { NotifierService } from 'angular-notifier';
-import { LoginComponent } from './login/login.component';
-
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -55,12 +54,8 @@ export class AppComponent implements OnInit {
     this.busy = true;
   }
   routeOff(ev: any): void{
-    // console.log(ev);
-
     this.busy = false;
-    if (ev.route.component.name === 'LoginComponent'){
-      this.onLogin();
-    }
+    this.onLogin();
   }
   logout(): void{
     localStorage.clear();

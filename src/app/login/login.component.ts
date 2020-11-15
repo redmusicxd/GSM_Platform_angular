@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     // Called once, before the instance is destroyed.
     // Add 'implements OnDestroy' to the class.
     if (this.loginsub){
-      console.log('destroyed login');
       this.loginsub.unsubscribe();
     }
   }
