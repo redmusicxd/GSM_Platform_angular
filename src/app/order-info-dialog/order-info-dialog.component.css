@@ -1,0 +1,12 @@
+@media (max-width: 530px){
+    :host {
+      margin: 0 1rem 0 1rem;
+    }
+}
+:host{
+  display: flex;
+  align-items: center;
+}
+mat-card{
+  width: 100%;
+}

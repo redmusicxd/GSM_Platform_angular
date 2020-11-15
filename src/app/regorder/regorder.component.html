@@ -1,36 +1,37 @@
-<mat-card class="" *ngIf="authenticated" style="text-align: center; text-align: -webkit-center;">
-    <mat-card-header class="flex-column"><h2 class="text-white">Creare comanda</h2></mat-card-header>
+<mat-card *ngIf="authenticated" style="text-align: center; text-align: -webkit-center">
+    <mat-card-header class="flex-column">
+      <h2>Creare comanda</h2>
+    </mat-card-header>
     <mat-card-content style="display: flex;
     flex-wrap: wrap;
-    max-width: 31rem;
-    justify-content: space-around;">
+    justify-content: space-around;" ngStyle.gt-xs="max-width: 31rem" ngStyle.xs="width: min-content">
         <!-- <mat-form-field appearance="fill" style="width: 89%;">
           <mat-label>Name</mat-label>
           <input matInput [(ngModel)]="orderRegister.name">
           <mat-icon matPrefix>perm_identity</mat-icon>
         </mat-form-field>     -->
         <form [formGroup]="RegOrderForm" (ngSubmit)="registerOrder()">
-        <mat-form-field appearance="fill" appearance="outline">
+        <mat-form-field appearance="fill" appearance="outline" style="width: 15rem;">
           <mat-label>Numar Telefon</mat-label>
           <input matInput formControlName="phone_number" required>
           <mat-icon matPrefix>phone</mat-icon>
-        </mat-form-field>    
-        <mat-form-field appearance="fill" appearance="outline">
+        </mat-form-field>
+        <mat-form-field appearance="fill" appearance="outline" style="width: 15rem;">
           <mat-label>Produs</mat-label>
           <input matInput formControlName="product" required>
           <mat-icon matPrefix>category</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="fill" appearance="outline">
+        <mat-form-field appearance="fill" appearance="outline" style="width: 15rem;">
           <mat-label>IMEI</mat-label>
           <input matInput formControlName="imei">
           <mat-icon matPrefix>info</mat-icon>
-        </mat-form-field>         
-        <mat-form-field appearance="fill" appearance="outline">
+        </mat-form-field>
+        <mat-form-field appearance="fill" appearance="outline" style="width: 15rem;">
           <mat-label>Serial Number</mat-label>
           <input matInput formControlName="serial_number">
           <mat-icon matPrefix>info</mat-icon>
-        </mat-form-field>    
-        <mat-form-field appearance="fill" appearance="outline">
+        </mat-form-field>
+        <mat-form-field appearance="fill" appearance="outline" style="width: 15rem;">
             <mat-label>Stare reparatie</mat-label>
             <mat-select formControlName="order_status" required>
               <mat-option value="in_lucru">In Lucru</mat-option>
@@ -39,22 +40,22 @@
               <mat-option value="gata">Gata</mat-option>
             </mat-select>
             <mat-icon matPrefix>construction</mat-icon>
-          </mat-form-field>  
-          <mat-form-field appearance="fill" appearance="outline">
-            <mat-label>Descriere Problema</mat-label>
-            <textarea matInput formControlName="issue_description" required></textarea>
-            <!-- <mat-icon matPrefix>warning</mat-icon> -->
-          </mat-form-field>      
-          <mat-form-field appearance="fill" appearance="outline">
-            <mat-label>Observatii Tehnician</mat-label>
-            <textarea matInput formControlName="technician_observations"></textarea>
-            <!-- <mat-icon matPrefix>feedback</mat-icon> -->
           </mat-form-field>
-          <mat-form-field appearance="fill" appearance="outline">
+          <mat-form-field appearance="fill" appearance="outline" style="width: 15rem;">
             <mat-label>Pret</mat-label>
             <input matInput type="number" formControlName="cost" required>
             <span matSuffix>Lei</span>
             <mat-icon matPrefix>local_offer</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="fill" appearance="outline" style="width: 100%;">
+            <mat-label>Descriere Problema</mat-label>
+            <textarea matInput formControlName="issue_description" required></textarea>
+            <!-- <mat-icon matPrefix>warning</mat-icon> -->
+          </mat-form-field>
+          <mat-form-field appearance="fill" appearance="outline" style="width: 100%;">
+            <mat-label>Observatii Tehnician</mat-label>
+            <textarea matInput formControlName="technician_observations"></textarea>
+            <!-- <mat-icon matPrefix>feedback</mat-icon> -->
           </mat-form-field>
           <br>
           <button mat-raised-button type="submit" [disabled]="!RegOrderForm.valid">Register</button>

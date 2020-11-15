@@ -5,15 +5,17 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 export interface OrderInterface {
-  id?: number,
-  phone_number: number,
-  issue_description: string,
-  technician_observations: string,
-  order_status: string,
-  imei: number,
-  serial_number: string,
-  product: string,
-  cost: number
+  id?: number;
+  phone_number: number;
+  issue_description: string;
+  finished: Date;
+  technician_observations: string;
+  order_status: string;
+  imei: number;
+  serial_number: string;
+  product: string;
+  cost: number;
+  paid: number;
 }
 
 @Component({
@@ -21,10 +23,10 @@ export interface OrderInterface {
   templateUrl: './regorder.component.html',
   styleUrls: ['./regorder.component.css']
 })
-export class RegorderComponent implements OnInit,OnDestroy {
+export class RegorderComponent implements OnInit, OnDestroy {
   RegOrderForm = this.fb.group(new Order(), Validators.required);
-  authenticated: boolean = false;
-  @Output() admin = new EventEmitter<boolean>(); 
+  authenticated = false;
+  @Output() admin = new EventEmitter<boolean>();
   private notifier: NotifierService;
   orderRegister: OrderInterface = new Order();
   private ordersub: Subscription;
@@ -32,48 +34,44 @@ export class RegorderComponent implements OnInit,OnDestroy {
     this.notifier = notifier;
   }
 
-  /**
-	 * Show a notification
-	 *
-	 * @param {string} type    Notification type
-	 * @param {string} message Notification message
-	*/
-	public showNotification( type: string, message: string ): void {
-		this.notifier.notify( type, message );
+  public showNotification( type: string, message: string ): void {
+    this.notifier.notify( type, message );
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('jwt')){
+    if (localStorage.getItem('jwt')){
       this.authenticated = true;
     }
   }
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    if(this.ordersub){
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
+    if (this.ordersub){
       this.ordersub.unsubscribe();
     }
   }
 
-  registerOrder(){
-    this.ordersub = this.api.registerOrder(localStorage.getItem('jwt'),this.RegOrderForm.value).subscribe((res: OrderInterface) => {
-      this.showNotification('success', `[RegOrder] Comanda ${res.id} s-a inregistrat cu success!`)
+  registerOrder(): void {
+    this.ordersub = this.api.registerOrder(localStorage.getItem('jwt'), this.RegOrderForm.value).subscribe((res: OrderInterface) => {
+      this.showNotification('success', `[RegOrder] Comanda ${res.id} s-a inregistrat cu success!`);
     }, err => {
-      this.showNotification("error", "[RegOrder] Ceva nu a mers bine!")
-    })
+      this.showNotification('error', '[RegOrder] Ceva nu a mers bine!');
+    });
   }
 
 }
 
 export class Order implements OrderInterface {
-  phone_number : number = null;
+  phone_number: number = null;
   issue_description: string = null;
-  technician_observations : string = null;
-  order_status : string = "in_asteptare";
-  product : string = null;
+  technician_observations: string = null;
+  order_status = 'in_asteptare';
+  product: string = null;
+  finished: Date;
   cost: number = null;
   imei: number = null;
-  serial_number : string = null;
-  constructor () {
+  serial_number: string = null;
+  paid: number = null;
+  constructor() {
   }
 }

@@ -1,7 +1,6 @@
-import { Inject } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../api.service';
 import { OrderInterface } from '../regorder/regorder.component';
 
 @Component({
@@ -11,13 +10,14 @@ import { OrderInterface } from '../regorder/regorder.component';
 })
 export class OrderInfoDialogComponent implements OnInit {
 
-  relateds: OrderInterface[] = [];
+  order: OrderInterface;
+  notfound: boolean;
 
-  constructor(public dialogRef: MatDialogRef<OrderInfoDialogComponent>,@Inject(MAT_DIALOG_DATA) public dialogdata: Observable<OrderInterface[]>) { 
-  }
+  constructor(private route: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit(): void {
-    this.dialogdata.subscribe(a => this.relateds = a);
+     this.api.getOrder(Number(this.route.snapshot.paramMap.get('id'))).subscribe((order: OrderInterface) => {this.order = order; }, (err: any) => err.status === 404 ? this.notfound = true : this.notfound = false);
   }
+
 
 }

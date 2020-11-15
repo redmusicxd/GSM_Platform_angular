@@ -1,0 +1,63 @@
+@media (max-width:768px){
+    mat-card{
+        /* width: min-content; */
+        margin-bottom: 1rem;
+    }
+}
+@media (max-width: 530px){
+    mat-card{
+        width: 11rem;
+        margin-left: 0!important;
+        margin-right: 0!important;
+        margin-top: .5rem!important;
+        margin-bottom: .5rem!important;
+    }
+    p{
+        font-size: small;
+    }
+    mat-card-header > h3{
+        font-size: smaller;
+        overflow-wrap: anywhere;
+    }
+    mat-chip{
+        width: fit-content!important;
+        font-size: smaller!important;
+    }
+    #cardbuttons > .btn {
+        padding: 0.15rem 0rem;
+        font-size: 0.675rem;
+    }
+    #cardbuttons > button:nth-child(2){
+        margin-left: 0!important;
+        margin-right: 0rem!important;
+    }
+}
+@media (min-width:531px){
+    #cardbuttons{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+mat-card {
+    white-space: pre-wrap;
+}
+mat-card-title {
+    overflow-wrap: anywhere;
+}
+mat-card-content > p {
+    max-width: 13rem;
+    overflow-wrap: break-word;
+}
+
+.md-fab-bottom-right{
+    position: fixed!important;
+    bottom: 10px!important;
+    right: 15px!important;
+}
+form > p > input {
+    max-width: 8rem;
+}
+mat-expansion-panel{
+  margin: 0 1rem 0 1rem;
+}

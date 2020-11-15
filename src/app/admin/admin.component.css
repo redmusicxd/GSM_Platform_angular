@@ -1,60 +1,6 @@
-/* :host{
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-} */
-@media (max-width:768px){
-    mat-card{
-        /* width: min-content; */
-        margin-bottom: 1rem;
-    }
-}
-@media (max-width: 530px){
-    mat-card{
-        width: 11rem;
-        margin-left: 0!important;
-        margin-right: 0!important;
-        margin-top: .5rem!important;
-        margin-bottom: .5rem!important;
-    }
-    p{
-        font-size: small;
-    }
-    mat-card-header > h3{
-        font-size: smaller;
-        overflow-wrap: anywhere;
-    }
-    mat-chip{
-        width: fit-content!important;
-        font-size: smaller!important;
-    }
-    #cardbuttons > button {
-        margin-right: 0rem!important;
-    }
-}
-mat-card-content > p {
-    max-width: 13rem;
-    overflow-wrap: break-word;
-}
-#cardbuttons{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 .md-fab-bottom-right{
     position: fixed!important;
     bottom: 10px!important;
     right: 15px!important;
-}
-form > p > input {
-    max-width: 8rem;
-}
-mat-card-header > input {
-    max-width: 8rem;
-}
-mat-card-actions {
-    padding-top: 0px!important;
-}
-mat-card-content {
-    margin-bottom: 0px!important;
+    z-index: 100;
 }

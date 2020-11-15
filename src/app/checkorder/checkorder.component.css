@@ -19,11 +19,6 @@ p{
     overflow-wrap: break-word;
     width: 14rem;
 } */
-@media (max-width: 768px){
-    mat-card{
-        margin-bottom: 1rem;
-    }
-}
 .mat-card-header{
     flex-direction: column!important;
 }
@@ -36,4 +31,20 @@ mat-card > div > h4 {
 }
 :host{
     flex-direction: column;
+}
+@media(min-width: 600px){
+  mat-card{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+@media(min-width: 835px){
+  mat-card{
+    margin-top: 0;
+  }
+}
+@media(max-width: 600px){
+  mat-card{
+    margin-top: 2rem;
+  }
 }
